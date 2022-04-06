@@ -14,10 +14,6 @@ export default function Game() {
 
     }, [])
 
-    const joinGame = () => {
-        socket.emit('join_game', {room: room.toUpperCase()})
-    }
-
     const startGame = () => {
         socket.emit('start_game')
     }
@@ -46,29 +42,16 @@ export default function Game() {
                         />
                     </Box>
                 </Box>
-                <Box className='full_box z-stack'>
                     <Box className='full_box'>
-                        <Button
-                            fullWidth
-                            size='large'
-                            disabled={name === ''}
-                            variant='outlined'
-                            onClick={() => startGame()}
-                        >
-                            Start New Game
-                        </Button>
-                    </Box>
-                    <Box className='full_box'>
-                        <Button
-                            fullWidth
-                            size='large'
-                            disabled={name === '' || room === ''}
-                            variant='contained'
-                            onClick={() => joinGame()}
-                        >
-                            Join Game
-                        </Button>
-                    </Box>
+                    <Button
+                        fullWidth
+                        size='large'
+                        disabled={name === ''}
+                        variant='contained'
+                        onClick={() => startGame()}
+                    >
+                        {room ? 'Join Game' : 'Start New Game'}
+                    </Button>
                 </Box>
             </Box>
         </Box>
