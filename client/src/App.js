@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from '@mui/material'
-import Game from './components/Game'
+import WaitingRoom from './components/WaitingRoom'
 import { io } from 'socket.io-client'
 import theme from './tools/theme';
 
@@ -14,7 +14,7 @@ function App() {
       <div className='app'>
         <Router>
           <Routes>
-            <Route path={'/'} element={ <Game /> } />
+            <Route path={'/'} element={ <WaitingRoom /> } />
           </Routes>
         </Router>
       </div>

@@ -1,0 +1,25 @@
+.chips {
+    max-width: 80%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.chip {
+    margin-right: 10px;
+    transform: scale(1);
+    animation: swell 1s infinite;
+}
+
+@keyframes swell {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
