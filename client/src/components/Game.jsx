@@ -8,14 +8,14 @@ export default function Game() {
     const [name, setname] = useState('')
 
     useEffect(() => {
-        socket.on('connect', () => {
-            console.log('player connected')
+        socket.on('game_join', (data) => {
+            console.log(data)
         })
 
     }, [])
 
     const startGame = () => {
-        socket.emit('start_game')
+        socket.emit('start_game', {name: name})
     }
 
 
@@ -48,6 +48,7 @@ export default function Game() {
                         size='large'
                         disabled={name === ''}
                         variant='contained'
+                        color={room ? 'primary' : 'secondary'}
                         onClick={() => startGame()}
                     >
                         {room ? 'Join Game' : 'Start New Game'}
