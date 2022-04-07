@@ -10,11 +10,11 @@ export default function WaitingRoom() {
     const [room, setroom] = useState('')
     const [name, setname] = useState('')
     const [roomcode, setroomcode] = useState('')
-    const [data, setdata] = useState()
+    const [players, setplayers] = useState()
 
     useEffect(() => {
         socket.on('game_join', (data) => {
-            setdata(data)
+            setplayers(data.players)
             setroomcode(data.roomCode)
         })
 
@@ -45,7 +45,7 @@ export default function WaitingRoom() {
         <Box className='page centered'>
             <Header pagetitle={roomcode}/>
             {!roomcode ? <JoinGame room={room} setroom={setroom} name={name} setname={setname} joinGame={joinGame}/> 
-            : <AwaitGame data={data} startGame={startGame}/>}
+            : <AwaitGame players={players} startGame={startGame}/>}
         </Box>
     )
 }

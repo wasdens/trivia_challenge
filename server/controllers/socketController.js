@@ -1,15 +1,30 @@
 const { uid } = require('uid');
 const { rooms } = require('../data/data');
 
+const addPlayer = (data, socket, io, room) => {
+    socket.join(room)
+    console.log(`${data.name} joined room ${room}`)
+    // modify room data and send data back to client
+    let playerid = socket.id
+    rooms[room].names.push(data.name)
+    rooms[room].players[playerid] = {
+        'status': 'active',
+        'name': data.name,
+        'id': playerid,
+    }
+    io.to(room).emit('game_join', rooms[room])
+}
+
 // start new game in new room
 const createGame = (data, socket, io) => {
     // create room with unique 5 digit code and add socket to room
     let room = uid(5).toUpperCase()
-    socket.join(room)
-    console.log(`${data.name} joined room ${room}`)
-    // modify room data and send data back to client
-    rooms[room]={'players': [data.name], 'roomCode': room}
-    io.to(room).emit('game_join', rooms[room])
+    rooms[room] = {
+        'names': [],
+        'roomCode': room,
+        'players': {},
+    }
+    addPlayer(data, socket, io, room)
 }
 
 // add player to existing room
@@ -17,12 +32,9 @@ const joinGame = (data, socket, io) => {
     // locate and determine existence of room
     let room = data.room
     if (rooms[room]) {
-        if (!rooms[room].players.includes(data.name)) {
+        if (!rooms[room].names.includes(data.name)) {
             // add player to room
-            socket.join(room)
-            console.log(`${data.name} joined room ${room}`)
-            rooms[room].players.push(data.name)
-            io.to(room).emit('game_join', rooms[room])
+            addPlayer(data, socket, io, room)
         } else {
             // player name already in use
             socket.emit('error', {message: 'Name already taken, please enter a new name.'})
