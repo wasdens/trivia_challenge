@@ -1,6 +1,25 @@
+const { range } = require('express/lib/request');
+const { append } = require('express/lib/response');
 const { uid } = require('uid');
 const { rooms } = require('../data/data');
 let playerRooms = {}
+
+const getUid = (LENGTH_UID) => {
+    let valid_uid = false
+    let uid
+    while (valid_uid === false) {
+        uid = []    
+        for (let i = 0; i < LENGTH_UID; i++) {
+            uid.push(Math.floor(10 * Math.random()))
+        }
+        uid = uid.join('')
+        console.log(uid)
+        if (!rooms[uid]){    
+            valid_uid = true
+        }
+    }
+    return uid
+}
 
 const addPlayer = (data, socket, io, room) => {
     socket.join(room)
@@ -21,7 +40,7 @@ const addPlayer = (data, socket, io, room) => {
 // start new game in new room
 const createGame = (data, socket, io) => {
     // create room with unique 5 digit code and add socket to room
-    let room = uid(5).toUpperCase()
+    let room = getUid(5)
     rooms[room] = {
         'names': [],
         'roomCode': room,
