@@ -46,3 +46,11 @@
   justify-content: space-between;
   flex-direction: row;
 }
+
+.alert {
+  position: fixed;
+  bottom: 10px;
+  left: 5%;
+  width: 90%;
+  z-index: 5;
+}

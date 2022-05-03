@@ -1,6 +1,6 @@
 import { Box, Chip } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import ActionFooter from './ActionFooter'
+import ActionFooter from '../page/ActionFooter'
 import './stylesheets/AwaitGame.css'
 
 export default function AwaitGame({startGame, players}) {

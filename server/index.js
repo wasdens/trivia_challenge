@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors');
 const path = require('path')
-const { createGame, joinGame, startGame } = require('./controllers/socketController')
+const { createGame, joinGame, startGame, disconnect, inGame } = require('./controllers/socketController')
 const http = require('http');
 const PORT = process.env.PORT || 4000
 const app = express()
@@ -32,5 +32,13 @@ io.on('connect', socket => {
 
     socket.on("start_game", (data) => {
       startGame(data, socket, io)
+    })
+
+    socket.on("disconnect", () => {
+      disconnect(socket, io)
+    })
+
+    socket.on("in_game", () => {
+      inGame(socket, io)
     })
 })
