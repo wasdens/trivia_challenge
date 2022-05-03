@@ -1,21 +1,18 @@
-const { range } = require('express/lib/request');
-const { append } = require('express/lib/response');
-const { uid } = require('uid');
 const { rooms } = require('../data/data');
 let playerRooms = {}
 
-const getUid = (LENGTH_UID) => {
-    let valid_uid = false
+const getUid = (lengthUid) => {
+    let validUid = false
     let uid
-    while (valid_uid === false) {
+    while (validUid === false) {
         uid = []    
-        for (let i = 0; i < LENGTH_UID; i++) {
+        for (let i = 0; i < lengthUid; i++) {
             uid.push(Math.floor(10 * Math.random()))
         }
         uid = uid.join('')
         console.log(uid)
         if (!rooms[uid]){    
-            valid_uid = true
+            validUid = true
         }
     }
     return uid
